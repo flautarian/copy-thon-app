@@ -60,7 +60,7 @@ def maximize_window(window):
     """
     window.deiconify()
 
-def on_press(key):
+def on_press(key, mouse_listener):
     """On Press
     
     Event handler for key press events.
@@ -72,12 +72,14 @@ def on_press(key):
     
     if recording is not True:
         logging.info("finishing keyboard thread recording")
+        mouse_listener.stop()
         return False
     try:
         logging.info(f"pressing-{key}")
         # check to finish keyboard listener (detect button configured as 'stop_recording_key')
         if key.char == options.options_config["stop_recording_key"]:
             recording = False
+            mouse_listener.stop()
             return False
         json_object = {'action':'pressed_key', 'key':key.char, 'time': time.time(), 'duration': get_duration_event()}
     except AttributeError:
@@ -189,15 +191,15 @@ def record_events():
     # Declare listeners
     recording = True
     events = []
-    
-    keyboard_listener = keyboard.Listener(
-        on_press=on_press,
-        on_release=on_release)
 
     mouse_listener = mouse.Listener(
         on_click=on_click,
         on_scroll=on_scroll,
         on_move=on_move)
+    
+    keyboard_listener = keyboard.Listener(
+        on_press=lambda event: on_press(event, mouse_listener),
+        on_release=on_release)
 
     # starting keylogger threads
     keyboard_listener.start()

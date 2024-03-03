@@ -13,16 +13,13 @@ class FloatingMessage(tkinter.Toplevel):
         self.label = tkinter.Label(self, text=message, fg='white', bg='black', padx=10, pady=5)
         self.label.pack()
         
-        # Update position on mouse movement
-        self.bind('<Motion>', self.update_position)
+        # Calculate middle of the current screen and setting message box in middle top
+        screen_width = self.winfo_screenwidth()
+        x = screen_width // 2 - self.winfo_width() // 2
+        self.geometry(f'+{x}+0')
         
         # Make the window stay on top
         self.attributes('-topmost', True)
-
-    def update_position(self, event):
-        # Update the window position based on mouse coordinates
-        x, y = event.x_root, event.y_root
-        self.geometry(f'+{x}+{y}')
         
     def show(self):
         # Show the floating message window
