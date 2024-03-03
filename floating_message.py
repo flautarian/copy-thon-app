@@ -7,10 +7,10 @@ class FloatingMessage(tkinter.Toplevel):
         self.withdraw()  # Hide the window initially
         self.attributes('-alpha', 0.8)  # Set transparency level
         self.overrideredirect(True)  # Remove window decorations
-        self.config(bg='black')  # Set background color
+        self.config(bg='green')  # Set background color
         
         # Create and place the label with the message
-        self.label = tkinter.Label(self, text=message, fg='white', bg='black', padx=10, pady=5)
+        self.label = tkinter.Label(self, text=message, fg='white', bg='green', padx=10, pady=5)
         self.label.pack()
         
         # Calculate middle of the current screen and setting message box in middle top

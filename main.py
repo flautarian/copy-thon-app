@@ -16,15 +16,18 @@ from tkinter.messagebox import askyesno
 from tkinter.ttk import Combobox
 from PIL import ImageTk, Image
 import logging
-from floating_message import FloatingMessage
 
 import options
 from record import start_record_events_thread
 from replay import start_replay_events_thread
-from utils import FONT_NAME, GREEN, SCRIPT_DIR, YELLOW
+from utils import GREEN, SCRIPT_DIR, YELLOW
 
 # Initialize TK
 window = Tk()
+
+# If data folder not exists we create it
+if not os.path.exists(f"{SCRIPT_DIR}/data/"):
+    os.makedirs(f"{SCRIPT_DIR}/data/")
 
 # Constants
 ARROW_IMG = Image.open(f"{SCRIPT_DIR}/img/arrow-one.png").resize((40,40), Image.LANCZOS)

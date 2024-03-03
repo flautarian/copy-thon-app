@@ -21,7 +21,7 @@ from utils import FONT_NAME, YELLOW, languages, i18n, SCRIPT_DIR
 default_options_config = {
     "language": 0,
     "minimize_when_play": 0,
-    "minimize_when_record": 1,
+    "minimize_when_record": 0,
     "stop_recording_key": "º",
     "stop_playing_key": "º",
 }
