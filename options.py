@@ -3,7 +3,7 @@
 This script provides an options menu for configuring settings related to the Py Replay Actions application.
 Users can set various options such as language, minimize behavior, and key assignments for stopping recording and playing.
 
-Author: [Author Name]
+Author: Facundo Giacconi AKA "GiacconiDev"
 
 """
 
@@ -15,7 +15,7 @@ import tkinter
 from pynput import keyboard
 from PIL import ImageTk, Image
 
-from utils import FONT_NAME, YELLOW, languages, i18n, SCRIPT_DIR
+from utils import FONT_NAME, RESOURCES_DIR, YELLOW, languages, i18n, SCRIPT_DIR
 
 # Default options configuration
 default_options_config = {
@@ -212,7 +212,7 @@ def open_options(root):
     # Update value of entry
     update_entry_value(stop_play_key, options_config['stop_playing_key'])
     
-    SAVE_IMG = Image.open(f"{SCRIPT_DIR}/img/disk.png").resize((50,50), Image.LANCZOS)
+    SAVE_IMG = Image.open(f"{RESOURCES_DIR}/img/disk.png").resize((50,50), Image.LANCZOS)
     SAVE_TK = ImageTk.PhotoImage(SAVE_IMG)
     
     apply_btn = Button(options_window, image=SAVE_TK, command=lambda: save_options(options_window, combo_lang.current(), minimize_r_flag, minimize_p_flag, stop_record_key.get(), stop_play_key.get()))

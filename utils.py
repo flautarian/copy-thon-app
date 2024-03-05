@@ -1,4 +1,5 @@
 import os
+import sys
 
 PINK = "#e2979c"
 RED = "#e7305b"
@@ -57,4 +58,12 @@ i18n = [
     }
 ]
 
-SCRIPT_DIR = os.path.dirname(__file__)
+
+
+# determine if application is a script file or frozen exe
+if getattr(sys, 'frozen', False):
+    SCRIPT_DIR = os.path.dirname(sys.executable)
+elif __file__:
+    SCRIPT_DIR = os.path.dirname(__file__)
+
+RESOURCES_DIR = os.path.dirname(__file__)

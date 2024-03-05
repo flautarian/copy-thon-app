@@ -20,7 +20,7 @@ import logging
 import options
 from record import start_record_events_thread
 from replay import start_replay_events_thread
-from utils import GREEN, SCRIPT_DIR, YELLOW
+from utils import GREEN, SCRIPT_DIR, RESOURCES_DIR, YELLOW
 
 # Initialize TK
 window = Tk()
@@ -30,23 +30,26 @@ if not os.path.exists(f"{SCRIPT_DIR}/data/"):
     os.makedirs(f"{SCRIPT_DIR}/data/")
 
 # Constants
-ARROW_IMG = Image.open(f"{SCRIPT_DIR}/img/arrow-one.png").resize((40,40), Image.LANCZOS)
+ARROW_IMG = Image.open(f"{RESOURCES_DIR}/img/arrow-one.png").resize((40,40), Image.LANCZOS)
 ARROW_TK = ImageTk.PhotoImage(ARROW_IMG)
 
-RECORD_IMG = Image.open(f"{SCRIPT_DIR}/img/record.png").resize((40,40), Image.LANCZOS)
+RECORD_IMG = Image.open(f"{RESOURCES_DIR}/img/record.png").resize((40,40), Image.LANCZOS)
 RECORD_TK = ImageTk.PhotoImage(RECORD_IMG)
 
-PLAY_IMG = Image.open(f"{SCRIPT_DIR}/img/play.png").resize((40,40), Image.LANCZOS)
+PLAY_IMG = Image.open(f"{RESOURCES_DIR}/img/play.png").resize((40,40), Image.LANCZOS)
 PLAY_TK = ImageTk.PhotoImage(PLAY_IMG)
 
-DELETE_IMG = Image.open(f"{SCRIPT_DIR}/img/delete.png").resize((40,40), Image.LANCZOS)
+DELETE_IMG = Image.open(f"{RESOURCES_DIR}/img/delete.png").resize((40,40), Image.LANCZOS)
 DELETE_TK = ImageTk.PhotoImage(DELETE_IMG)
 
-GEAR_IMG = Image.open(f"{SCRIPT_DIR}/img/gear.png").resize((40,40), Image.LANCZOS)
+GEAR_IMG = Image.open(f"{RESOURCES_DIR}/img/gear.png").resize((40,40), Image.LANCZOS)
 GEAR_TK = ImageTk.PhotoImage(GEAR_IMG)
 
-LOOP_ARROW_IMG = Image.open(f"{SCRIPT_DIR}/img/arrow-repeat.png").resize((40,40), Image.LANCZOS)
+LOOP_ARROW_IMG = Image.open(f"{RESOURCES_DIR}/img/arrow-repeat.png").resize((40,40), Image.LANCZOS)
 LOOP_ARROW_TK = ImageTk.PhotoImage(LOOP_ARROW_IMG)
+
+ICON_IMG = Image.open(f"{RESOURCES_DIR}/img/snake.png")
+ICON_TK = ImageTk.PhotoImage(ICON_IMG)
 
 reps = 0
 timer = None
@@ -128,6 +131,7 @@ def refresh_file_selector():
 if __name__ == "__main__":
     window.title("Py replay actions")
     window.config(padx=10, pady=5, bg=YELLOW)
+    window.iconphoto(False, ICON_TK)
     
     # elements declaration
     record_btn = Button(image=RECORD_TK, command=lambda: start_record_events_thread([play_btn, record_btn, record_loop_btn, delete_btn, options_btn], window, refresh_file_selector))
