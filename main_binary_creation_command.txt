@@ -1,0 +1,1 @@
+pyinstaller --add-data "./img/*:./img" --noconsole --onefile --icon=./img/icon.ico main.py

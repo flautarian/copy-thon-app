@@ -130,6 +130,7 @@ def refresh_file_selector():
 
 if __name__ == "__main__":
     window.title("Py replay actions")
+    window.resizable(False, False)
     window.config(padx=10, pady=5, bg=YELLOW)
     window.iconphoto(False, ICON_TK)
     

@@ -159,6 +159,7 @@ def open_options(root):
     """
     # Create a new window for the options menu
     options_window = Toplevel(root)
+    options_window.resizable(False, False)
     options_window.title(get_i18n_literal(literal="options"))
     options_window.config(padx=10, pady=5, bg=YELLOW)
 
