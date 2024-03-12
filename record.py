@@ -77,11 +77,16 @@ def on_press(key, mouse_listener):
     try:
         logging.info(f"pressing-{key}")
         # check to finish keyboard listener (detect button configured as 'stop_recording_key')
-        if key.char == options.options_config["stop_recording_key"]:
-            recording = False
-            mouse_listener.stop()
-            return False
-        json_object = {'action':'pressed_key', 'key':key.char, 'time': time.time(), 'duration': get_duration_event()}
+        if hasattr(key, "char") and key.char is not None:
+            if key.char == options.options_config["stop_recording_key"]:
+                recording = False
+                mouse_listener.stop()
+                return False
+            json_object = {'action':'pressed_key', 'key':key.char, 'time': time.time(), 'duration': get_duration_event()}
+        elif hasattr(key, "name"):
+            json_object = {'action':'pressed_key', 'key':key.name, 'time': time.time(), 'duration': get_duration_event()}
+        elif hasattr(key, "vk"):
+            json_object = {'action':'pressed_key', 'vk':key.vk, 'time': time.time(), 'duration': get_duration_event()}
     except AttributeError:
         json_object = {'action':'pressed_key', 'key':str(key).split(".")[-1], 'time': time.time(), 'duration': get_duration_event()}
     events.append(json_object)
@@ -101,7 +106,12 @@ def on_release(key):
         return False
     try:
         logging.info(f"release-{key}")
-        json_object = {'action':'released_key', 'key':key.char, 'time': time.time(), 'duration': get_duration_event()}
+        if hasattr(key, "char") and key.char is not None:
+            json_object = {'action':'released_key', 'key':key.char, 'time': time.time(), 'duration': get_duration_event()}
+        elif hasattr(key, "name"):
+            json_object = {'action':'released_key', 'key':key.name, 'time': time.time(), 'duration': get_duration_event()}
+        elif hasattr(key, "vk"):
+            json_object = {'action':'released_key', 'vk':key.vk, 'time': time.time(), 'duration': get_duration_event()}
     except AttributeError:
         json_object = {'action':'released_key', 'key':str(key).split(".")[-1], 'time': time.time(), 'duration': get_duration_event()}
     events.append(json_object)

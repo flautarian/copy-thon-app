@@ -1,1 +1,1 @@
-pyinstaller --add-data "./img/*:./img" --noconsole --onefile --icon=./img/icon.ico main.py
+pyinstaller --add-data "./img/*:./img" --noconsole --onefile --icon=./img/icon.ico --name copy-thon-app main.py

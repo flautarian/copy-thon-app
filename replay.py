@@ -101,7 +101,7 @@ def start_replay_events_thread(btns, file, window, looping_check):
         
         import json
         import time
-        from pynput.keyboard import Key, Controller as KeyboardController
+        from pynput.keyboard import Key, Controller as KeyboardController, KeyCode
         from pynput.mouse import Button, Controller as MouseController
             
         looping = False
@@ -109,7 +109,7 @@ def start_replay_events_thread(btns, file, window, looping_check):
         if looping_check is True:
             looping = True
         
-        replay(KeyboardController, MouseController, Button, Key, file)
+        replay(KeyboardController, MouseController, Button, Key, file, KeyCode)
         
         #enable required buttons of GUI
         def reenable_btns(btns):
@@ -128,7 +128,7 @@ def start_replay_events_thread(btns, file, window, looping_check):
     # Start the thread
     replay_thread.start()
     
-def replay(KeyboardController, MouseController, Button, Key, file):
+def replay(KeyboardController, MouseController, Button, Key, file, KeyCode):
     """Replay
     
     Replays recorded events.
@@ -145,13 +145,13 @@ def replay(KeyboardController, MouseController, Button, Key, file):
     keyboard_listener = keyboard.Listener(on_press=on_press_replay)
     keyboard_listener.start()
     
-    replay_events(KeyboardController, MouseController, Button, Key, file)
+    replay_events(KeyboardController, MouseController, Button, Key, file, KeyCode)
     # Stop keyboard thread
     
     if keyboard_listener.is_alive():
         keyboard_listener.stop()
 
-def replay_events(KeyboardController, MouseController, Button, Key, file):
+def replay_events(KeyboardController, MouseController, Button, Key, file, KeyCode):
     """Replay Events
     
     Replays recorded events.
@@ -187,14 +187,18 @@ def replay_events(KeyboardController, MouseController, Button, Key, file):
             time.sleep(json_line['duration'])
             
             if json_line['action'] == 'pressed_key':
-                if hasattr(Key, json_line['key']):
+                if "key" in json_line and hasattr(Key, json_line['key']):
                     keyboard.press(Key[json_line['key']])
+                elif "vk" in json_line:
+                    keyboard.press(KeyCode.from_vk(json_line['vk']))
                 else:
                     keyboard.press(json_line['key'])
                 
             elif json_line['action'] == 'released_key':
-                if hasattr(Key, json_line['key']):
+                if "key" in json_line and hasattr(Key, json_line['key']):
                     keyboard.release(Key[json_line['key']])
+                elif "vk" in json_line:
+                    keyboard.release(KeyCode.from_vk(json_line['vk']))
                 else:
                     keyboard.release(json_line['key'])
             
